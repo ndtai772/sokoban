@@ -1,0 +1,57 @@
+name: sokoban
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  publish:
+    name: Publish for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        name: [linux, windows, macos]
+
+        include:
+          - name: linux
+            os: ubuntu-latest
+            suffix: ""
+            asset_suffix: -linux
+          - name: windows
+            os: windows-latest
+            suffix: .exe
+            asset_suffix: -windows.exe
+          - name: macos
+            os: macos-latest
+            suffix: ""
+            asset_suffix: -macos
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --release --all
+    - name: Upload a* binaries
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/release/astar${{ matrix.suffix }}
+        asset_name: astar${{ matrix.asset_suffix }}
+        tag: ${{github.ref}}
+    - name: Upload manual binaries
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/release/manual${{ matrix.suffix }}
+        asset_name: manual${{ matrix.asset_suffix }}
+        tag: ${{github.ref}}
+    - name: Upload dfs binaries
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/release/dfs${{ matrix.suffix }}
+        asset_name: dfs${{ matrix.asset_suffix }}
+        tag: ${{github.ref}}
