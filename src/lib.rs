@@ -1,6 +1,9 @@
 use std::fmt::Display;
 
-use crossterm::{cursor, execute, terminal::{Clear, ClearType, disable_raw_mode, enable_raw_mode}};
+use crossterm::{
+    cursor, execute,
+    terminal::{disable_raw_mode, enable_raw_mode, Clear, ClearType},
+};
 use itertools::Itertools;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

@@ -38,10 +38,10 @@ impl Ord for State {
 }
 
 fn a_star(game: &mut GameBoard) -> Option<GameBoard> {
-    let mut  queue = BinaryHeap::new();
+    let mut queue = BinaryHeap::new();
     queue.push(State {
         perdict_cost: heuristic(&game) + game.actions.len(),
-        game: game.clone()
+        game: game.clone(),
     });
 
     while !queue.is_empty() {
@@ -63,11 +63,11 @@ fn a_star(game: &mut GameBoard) -> Option<GameBoard> {
             };
             if game.is_win() {
                 return Some(game);
-            }        
+            }
             queue.push(State {
                 perdict_cost: heuristic(&game) + game.actions.len(),
-                game: game.clone()
-            });        
+                game: game.clone(),
+            });
         }
     }
     None

@@ -1,4 +1,7 @@
-use crossterm::{event::{read, Event, KeyCode, KeyEvent, KeyModifiers}, terminal::{disable_raw_mode, enable_raw_mode}};
+use crossterm::{
+    event::{read, Event, KeyCode, KeyEvent, KeyModifiers},
+    terminal::{disable_raw_mode, enable_raw_mode},
+};
 use sokoban::*;
 
 fn main() {
